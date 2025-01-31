@@ -50,7 +50,7 @@ export const navData = [
     subheader: 'Weather APP',
     items: [
       { title: 'Home', path: paths.dashboard.root, icon: ICONS.tour },
-      { title: 'Records', path: paths.dashboard.two, icon: ICONS.menuItem }
+      { title: 'Records', path: paths.dashboard.records, icon: ICONS.menuItem }
     ],
   },
   /**
