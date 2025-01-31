@@ -25,3 +25,7 @@ yarn build
 # or
 npm run build
 ```
+
+```
+<a href="https://iconscout.com/icons/weather" class="text-underline font-size-sm" target="_blank">Ios Weather</a> by <a href="https://iconscout.com/contributors/giulio-smedile" class="text-underline font-size-sm" target="_blank">Giulio Smedile</a>
+```
