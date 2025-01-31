@@ -1,13 +1,13 @@
 import axios from 'axios';
+import { CONFIG } from 'src/config-global';
 import { GeocodingResponse, WeatherData } from 'src/components/weather/types';
 
-const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
 const BASE_URL = 'http://api.openweathermap.org/data/2.5';
 
 export async function geocodeLocation(location: string): Promise<GeocodingResponse> {
   try {
     const response = await axios.get(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(location)}&limit=1&appid=${OPENWEATHER_API_KEY}`
+      `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(location)}&limit=1&appid=${CONFIG.openWeatherMapKey}`
     );
 
     if (response.data.length === 0) {
@@ -32,7 +32,7 @@ export async function getWeatherData(
 ): Promise<WeatherData[]> {
   try {
     const response = await axios.get(
-      `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric`
+      `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${CONFIG.openWeatherMapKey}&units=metric`
     );
     
     return filterWeatherData(response.data, startDate, endDate);

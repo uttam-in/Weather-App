@@ -1,14 +1,14 @@
-export interface WeatherRecord {
-    id: number;
-    location: string;
-    latitude: number;
-    longitude: number;
-    start_date: string;
-    end_date: string;
-    temperature_data: WeatherData[];
-    created_at: string;
-    updated_at: string;
-  }
+// export interface WeatherRecord {
+//     id: number;
+//     location: string;
+//     latitude: number;
+//     longitude: number;
+//     start_date: string;
+//     end_date: string;
+//     temperature_data: WeatherData[];
+//     created_at: string;
+//     updated_at: string;
+//   }
   
   export interface WeatherData {
     dt: number;
@@ -33,4 +33,27 @@ export interface WeatherRecord {
     data?: T;
     message?: string;
     error?: string;
+  }
+
+  export interface WeatherRecord {
+    id: number;
+    location: string;
+    latitude: number;
+    longitude: number;
+    start_date: string;
+    end_date: string;
+    temperature_data: Array<{
+      dt: number;
+      main: {
+        temp: number;
+        feels_like: number;
+        humidity: number;
+      };
+      weather: Array<{
+        main: string;
+        description: string;
+      }>;
+    }>;
+    created_at: string;
+    updated_at: string;
   }
