@@ -18,10 +18,12 @@ NEXT_PUBLIC_OPENWEATHER_API_KEY=************
 # DB setup
 Copy sample.env.local to .env.sample
 Update the db credentials
+```
 DB_HOST=
 DB_USER=
 DB_PASSWORD=
 DB_NAME=
+```
 
 **Using Npm**
 
