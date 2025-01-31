@@ -27,7 +27,7 @@ DB_NAME=
 **Using Npm**
 
 ```sh
-npm i
+npm i (or) npm i --legacy-peer-deps  
 npm run dev
 ```
 
