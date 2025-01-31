@@ -246,9 +246,7 @@ export function WeatherAppRecords() {
     setEditingId(record.id);
   };
 
-  const formatDate = (date: string) => {
-    return format(new Date(date), 'MMM dd, yyyy');
-  };
+  const formatDate = (date: string) => format(new Date(date), 'MMM dd, yyyy');
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
