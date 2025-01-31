@@ -67,3 +67,35 @@ export const getCurrentWeather = async ({ location }: WeatherParams): Promise<We
     throw error;
   }
 };
+
+
+export const getCurrentWeatherLocation = async ({ location }: WeatherParams): Promise<WeatherData> => {
+  try {
+    const response = await axios.get('/api/weather/loc', {
+      params: {
+        location,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      const errorMessage = error.response?.data?.message || error.message;
+      
+      switch (error.response?.status) {
+        case 404:
+          throw new Error(`Location "${location}" not found`);
+        case 401:
+          throw new Error('Invalid API key');
+        case 429:
+          throw new Error('Rate limit exceeded. Please try again later');
+        case 500:
+          throw new Error('Weather service is currently unavailable');
+        default:
+          throw new Error(`Failed to fetch weather data: ${errorMessage}`);
+      }
+    }
+    
+    throw error;
+  }
+};

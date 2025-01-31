@@ -21,7 +21,7 @@ import { WeatherDisplay } from 'src/components/weather';
 import { WeatherData, SearchParams, LocationData } from 'src/components/weather/types';
 import { DEFAULT_CENTER } from 'src/components/weather/constants';
 import { TabPanel } from 'src/components/weather/TabPanel';
-import { getCurrentWeather } from 'src/services/weather';
+import { getCurrentWeather, getCurrentWeatherLocation } from 'src/services/weather';
 import { LocationSearch } from 'src/components/weather/LocationSearch';
 
 export function WeatherApp() {
@@ -224,7 +224,13 @@ export function WeatherApp() {
     setError('');
 
     try {
-      const data:any = await getCurrentWeather({ location: query });
+      let data:any = null;
+      if (tabValue === 2){
+        data = await getCurrentWeatherLocation({ location: query });
+      }else{
+        data = await getCurrentWeather({ location: query });
+      }
+      
       setWeather(data);
       setMapCenter({
         lat: data.coord.lat,
@@ -235,7 +241,7 @@ export function WeatherApp() {
 
       setError('');
       setLoading(true);
- 
+      if (tabValue !== 2)
       try {
         const payload: { location: string; startDate: string; endDate: string; id?: number } = {
           location,
