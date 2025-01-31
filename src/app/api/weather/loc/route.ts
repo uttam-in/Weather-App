@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    let url = `${CONFIG.openWeatherAPIurl}/weather?${location}&appid=${CONFIG.openWeatherMapKey}&units=metric`;
+    const url = `${CONFIG.openWeatherAPIurl}/weather?${location}&appid=${CONFIG.openWeatherMapKey}&units=metric`;
     const response = await axios.get(url);
 
     return NextResponse.json(response.data);
