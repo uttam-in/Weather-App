@@ -35,14 +35,22 @@ export function NavUpgrade({ sx, ...other }: StackProps) {
             Uttam Kumar Panasala
           </Typography>
 
-          <Typography
+            <Typography
             variant="body2"
             noWrap
             sx={{ color: 'var(--layout-nav-text-primary-color)' }}
-          >
-           <b> Product Manager Accelerator</b><br />
+            >
+             <b> Product Manager Accelerator</b><br />
             From entry-level to VP of Product, we<br /> support PM professionals through<br /> every stage of their careers.
-          </Typography>
+            </Typography>
+            <Button
+            variant="outlined"
+            size="small"
+            sx={{ mt: 1 }}
+            onClick={() => window.open('https://www.linkedin.com/school/pmaccelerator/', '_blank')}
+            >
+            Info
+            </Button>
         </Stack>
 
 
