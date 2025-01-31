@@ -32,13 +32,16 @@ export async function GET() {
       longitude: row.longitude,
       start_date: row.start_date,
       end_date: row.end_date,
-      temperature_data: JSON.parse(row.temperature_data),
+      temperature_data: typeof row.temperature_data === 'string' 
+        ? JSON.parse(row.temperature_data)
+        : row.temperature_data,
       created_at: row.created_at,
       updated_at: row.updated_at
     }));
 
     return NextResponse.json({ data: records });
   } catch (error: any) {
+    console.error('Error fetching weather records:', error);
     return NextResponse.json(
       { error: error.message },
       { status: 500 }
