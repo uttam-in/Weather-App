@@ -178,6 +178,7 @@ export function WeatherApp() {
 
   const fetchWeather = async () => {
     let query = '';
+    let location = '';
     
     switch (tabValue) {
       case 0:
@@ -186,6 +187,7 @@ export function WeatherApp() {
           return;
         }
         query = `${locationData.selectedCity.name},${locationData.selectedCountry.isoCode}`;
+        location = locationData.selectedCity.name;
         break;
         
       case 1:
@@ -194,6 +196,7 @@ export function WeatherApp() {
           return;
         }
         query = searchParams.zipCode;
+        location = searchParams.zipCode;
         break;
         
       case 2:
@@ -202,6 +205,7 @@ export function WeatherApp() {
           return;
         }
         query = `lat=${searchParams.latitude}&lon=${searchParams.longitude}`;
+        location = `${searchParams.latitude},${searchParams.longitude}`;
         break;
 
       case 3:
@@ -210,6 +214,7 @@ export function WeatherApp() {
           return;
         }
         query = searchParams.plainText;
+        location = searchParams.plainText;
         break;
       default:
         break
@@ -225,6 +230,38 @@ export function WeatherApp() {
         lat: data.coord.lat,
         lng: data.coord.lon,
       });
+
+      // Store the search history 
+
+      setError('');
+      setLoading(true);
+ 
+      try {
+        const payload: { location: string; startDate: string; endDate: string; id?: number } = {
+          location,
+          startDate: new Date().toISOString().split('T')[0],
+          endDate: new Date().toISOString().split('T')[0],
+        };
+  
+        const response = await fetch('/api/weather-records', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+  
+        const data = await response.json();
+        
+        if (data.error) {
+          throw new Error(data.error);
+        }
+  
+      } catch (errorMsg: any) {
+        setError(errorMsg.message);
+      } finally {
+        setLoading(false);
+      }
+      // end of storing search history
+
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch weather data');
       setWeather(null);

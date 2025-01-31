@@ -24,7 +24,7 @@ async function validateDateRange(startDate: string, endDate: string): Promise<vo
 // GET handler
 export async function GET() {
   try {
-    const [rows]: [any[], any] = await pool.query('SELECT * FROM weather_records');
+    const [rows]: [any[], any] = await pool.query('SELECT * FROM weather_records ORDER BY id DESC');
     const records: WeatherRecord[] = rows.map((row: any) => ({
       id: row.id,
       location: row.location,
