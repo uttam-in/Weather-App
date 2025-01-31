@@ -11,6 +11,10 @@ yarn install
 yarn dev
 ```
 
+**Update .env file**
+# OpenWeather API Key - Replace with your actual API key from OpenWeatherMap
+NEXT_PUBLIC_OPENWEATHER_API_KEY=************
+
 **Using Npm**
 
 ```sh
