@@ -243,129 +243,199 @@ export function WeatherApp() {
   }, [weather]);
 
   return (
-    <Box sx={{ maxWidth: 'xl', margin: '0 auto', p: 3 }}>
-      {/* Header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">
-          Weather App
-        </Typography>
-        <Box sx={{ textAlign: 'right' }}>
-          <Typography variant="body2" color="text.secondary">
-            {currentDateTime} UTC
+    <Box 
+      sx={{ 
+        width: '100%',
+        maxWidth: '1200px', // Fixed maximum width
+        margin: '0 auto',
+        minHeight: '100vh',
+        p: { xs: 2, md: 3 }, // Responsive padding
+        backgroundColor: 'background.default',
+      }}
+    >
+      {/* Container for all content */}
+      <Box 
+        sx={{ 
+          width: '100%',
+          backgroundColor: 'background.paper',
+          borderRadius: 1,
+          boxShadow: 1,
+          overflow: 'hidden',
+        }}
+      >
+        {/* Header */}
+        <Box 
+          sx={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            p: 3,
+            borderBottom: 1,
+            borderColor: 'divider',
+          }}
+        >
+          <Typography variant="h4" component="h1">
+            Weather App
           </Typography>
+          <Box sx={{ textAlign: 'right' }}>
+            <Typography variant="body2" color="text.secondary">
+              {currentDateTime} UTC
+            </Typography>
+          </Box>
+        </Box>
+
+        {/* Main Content */}
+        <Box sx={{ p: 3 }}>
+          {/* Search Tabs */}
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs 
+              value={tabValue} 
+              onChange={handleTabChange} 
+              sx={{ 
+                mb: 3,
+                '& .MuiTabs-flexContainer': {
+                  justifyContent: { xs: 'flex-start', md: 'center' }
+                }
+              }}
+              variant="scrollable"
+              scrollButtons="auto"
+              allowScrollButtonsMobile
+            >
+              <Tab label="Location Search" />
+              <Tab label="Zip Code" />
+              <Tab label="Coordinates" />
+              <Tab label="Search" />
+            </Tabs>
+          </Box>
+
+          {/* Search Forms */}
+          <Box sx={{ mt: 2 }}>
+            <TabPanel value={tabValue} index={0}>
+              <LocationSearch 
+                locationData={locationData}
+                onCountryChange={handleCountryChange}
+                onStateChange={handleStateChange}
+                onCityChange={handleCityChange}
+              />
+            </TabPanel>
+
+            <TabPanel value={tabValue} index={1}>
+              <TextField
+                fullWidth
+                label="Zip Code"
+                placeholder="Enter zip code..."
+                value={searchParams.zipCode}
+                onChange={handleInputChange('zipCode')}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{ maxWidth: 'md' }}
+              />
+            </TabPanel>
+
+            <TabPanel value={tabValue} index={2}>
+              <Grid container spacing={2} sx={{ maxWidth: 'md', margin: '0 auto' }}>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    label="Latitude"
+                    value={searchParams.latitude}
+                    onChange={handleInputChange('latitude')}
+                    type="number"
+                    inputProps={{ step: 'any', min: -90, max: 90 }}
+                    placeholder="-90 to 90"
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    label="Longitude"
+                    value={searchParams.longitude}
+                    onChange={handleInputChange('longitude')}
+                    type="number"
+                    inputProps={{ step: 'any', min: -180, max: 180 }}
+                    placeholder="-180 to 180"
+                  />
+                </Grid>
+              </Grid>
+            </TabPanel>
+
+            <TabPanel value={tabValue} index={3}>
+              <TextField
+                fullWidth
+                label="Location Search"
+                placeholder="Enter city name, landmark, or address..."
+                value={searchParams.plainText}
+                onChange={handleInputChange('plainText')}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{ maxWidth: 'md' }}
+              />
+            </TabPanel>
+          </Box>
+
+          {/* Action Buttons */}
+          <Box 
+            sx={{ 
+              mt: 3, 
+              mb: 4, 
+              display: 'flex', 
+              gap: 2,
+              justifyContent: 'center'
+            }}
+          >
+            <Button
+              variant="contained"
+              onClick={fetchWeather}
+              disabled={loading}
+              startIcon={loading ? <CircularProgress size={20} /> : <SearchIcon />}
+            >
+              {loading ? 'Loading...' : 'Get Weather'}
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={getCurrentLocation}
+              disabled={loading}
+              startIcon={<RefreshIcon />}
+            >
+              Use Current Location
+            </Button>
+          </Box>
+
+          {/* Error Alert */}
+          {error && (
+            <Alert 
+              severity="error" 
+              sx={{ 
+                mb: 2,
+                maxWidth: 'md',
+                margin: '0 auto'
+              }}
+            >
+              {error}
+            </Alert>
+          )}
+
+          {/* Weather Display */}
+          {weather && (
+            <Box sx={{ mt: 3 }}>
+              <WeatherDisplay 
+                weather={weather} 
+                currentDateTime={currentDateTime} 
+              />
+            </Box>
+          )}
         </Box>
       </Box>
-
-      {/* Search Tabs */}
-      <Tabs value={tabValue} onChange={handleTabChange} sx={{ mb: 3 }}>
-        <Tab label="Location Search" />
-        <Tab label="Zip Code" />
-        <Tab label="Coordinates" />
-        <Tab label="Search" />
-      </Tabs>
-
-      {/* Search Forms */}
-      <TabPanel value={tabValue} index={0}>
-        <LocationSearch 
-          locationData={locationData}
-          onCountryChange={handleCountryChange}
-          onStateChange={handleStateChange}
-          onCityChange={handleCityChange}
-        />
-      </TabPanel>
-
-      <TabPanel value={tabValue} index={1}>
-        <TextField
-          fullWidth
-          label="Zip Code"
-          placeholder="Enter zip code..."
-          value={searchParams.zipCode}
-          onChange={handleInputChange('zipCode')}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </TabPanel>
-
-      <TabPanel value={tabValue} index={2}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Latitude"
-              value={searchParams.latitude}
-              onChange={handleInputChange('latitude')}
-              type="number"
-              inputProps={{ step: 'any', min: -90, max: 90 }}
-              placeholder="-90 to 90"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Longitude"
-              value={searchParams.longitude}
-              onChange={handleInputChange('longitude')}
-              type="number"
-              inputProps={{ step: 'any', min: -180, max: 180 }}
-              placeholder="-180 to 180"
-            />
-          </Grid>
-        </Grid>
-      </TabPanel>
-
-      <TabPanel value={tabValue} index={3}>
-        <TextField
-          fullWidth
-          label="Location Search"
-          placeholder="Enter city name, landmark, or address..."
-          value={searchParams.plainText}
-          onChange={handleInputChange('plainText')}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </TabPanel>
-
-      {/* Action Buttons */}
-      <Box sx={{ mt: 3, mb: 4, display: 'flex', gap: 2 }}>
-        <Button
-          variant="contained"
-          onClick={fetchWeather}
-          disabled={loading}
-          startIcon={loading ? <CircularProgress size={20} /> : <SearchIcon />}
-        >
-          {loading ? 'Loading...' : 'Get Weather'}
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={getCurrentLocation}
-          disabled={loading}
-          startIcon={<RefreshIcon />}
-        >
-          Use Current Location
-        </Button>
-      </Box>
-
-      {/* Error Alert */}
-      {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {error}
-        </Alert>
-      )}
-
-      {/* Weather Display */}
-      {weather &&  (
-      <WeatherDisplay weather={weather} currentDateTime={currentDateTime} />
-      )}
     </Box>
   );
 }
