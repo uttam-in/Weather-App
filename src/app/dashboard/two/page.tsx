@@ -1,11 +1,11 @@
 import { CONFIG } from 'src/config-global';
 
-import { BlankView } from 'src/sections/blank/view';
+import { WeatherAppRecords } from 'src/sections/weather-records/view';
 
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Page two | Dashboard - ${CONFIG.appName}` };
+export const metadata = { title: `Records | Dashboard - ${CONFIG.appName}` };
 
 export default function Page() {
-  return <BlankView title="Page two" />;
+  return <WeatherAppRecords />;
 }

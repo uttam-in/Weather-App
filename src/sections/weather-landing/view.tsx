@@ -20,7 +20,6 @@ import { DashboardContent } from 'src/layouts/dashboard';
 import { CONFIG } from 'src/config-global';
 import { getCurrentWeather } from 'src/services/weather';
 
-const API_KEY = CONFIG.assetsDir;
 
 type WeatherData = {
   main: {

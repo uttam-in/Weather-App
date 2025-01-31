@@ -1,8 +1,6 @@
-// src/services/weather.ts
 'use client';
 
-import axios from 'axios';
-import { isAxiosError } from 'axios';
+import axios, { isAxiosError } from 'axios';
 
 // ----------------------------------------------------------------------
 
