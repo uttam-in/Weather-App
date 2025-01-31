@@ -25,7 +25,6 @@ yarn build
 # or
 npm run build
 ```
+## Icons
 
-```
-<a href="https://iconscout.com/icons/weather" class="text-underline font-size-sm" target="_blank">Ios Weather</a> by <a href="https://iconscout.com/contributors/giulio-smedile" class="text-underline font-size-sm" target="_blank">Giulio Smedile</a>
-```
+[Ios Weather](https://iconscout.com/icons/weather) by [Giulio Smedile](https://iconscout.com/contributors/giulio-smedile)
