@@ -249,10 +249,10 @@ export function WeatherApp() {
           body: JSON.stringify(payload),
         });
   
-        const data = await response.json();
+        const dataM = await response.json();
         
-        if (data.error) {
-          throw new Error(data.error);
+        if (dataM.error) {
+          throw new Error(dataM.error);
         }
   
       } catch (errorMsg: any) {
