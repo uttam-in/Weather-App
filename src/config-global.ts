@@ -39,8 +39,8 @@ export const CONFIG: ConfigValue = {
   appVersion: packageJson.version,
   serverUrl: process.env.NEXT_PUBLIC_SERVER_URL ?? '',
   assetsDir: process.env.NEXT_PUBLIC_ASSETS_DIR ?? '',
-  openWeatherMapKey: process.env.OPEN_WEATHER_API_KEY ?? '94b21cdb109da4131753b291f6026f8c',
-  openWeatherAPIurl: process.env.OPEN_WEATHER_API_URL ?? 'https://api.openweathermap.org/data/2.5',
+  openWeatherMapKey: process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY ?? '',
+  openWeatherAPIurl: process.env.NEXT_PUBLIC_OPEN_WEATHER_API_URL ?? '',
   isStaticExport: JSON.parse(`${process.env.BUILD_STATIC_EXPORT}`),
   /**
    * Auth
