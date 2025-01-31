@@ -391,8 +391,9 @@ export function WeatherAppRecords() {
                       Date Range: {formatDate(record.start_date)} - {formatDate(record.end_date)}
                     </Typography>
 
+
                     <Typography variant="body2" color="text.secondary">
-                      Coordinates: {record.latitude.toFixed(2)}, {record.longitude.toFixed(2)}
+                      Coordinates: {Number(record.latitude).toFixed(2)}, {Number(record.longitude).toFixed(2)}
                     </Typography>
 
                     {record.temperature_data && (
