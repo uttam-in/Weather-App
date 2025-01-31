@@ -26,48 +26,26 @@ export function NavUpgrade({ sx, ...other }: StackProps) {
   return (
     <Stack sx={{ px: 2, py: 5, textAlign: 'center', ...sx }} {...other}>
       <Stack alignItems="center">
-        <Box sx={{ position: 'relative' }}>
-          <Avatar src={user?.photoURL} alt={user?.displayName} sx={{ width: 48, height: 48 }}>
-            {user?.displayName?.charAt(0).toUpperCase()}
-          </Avatar>
-
-          <Label
-            color="success"
-            variant="filled"
-            sx={{
-              top: -6,
-              px: 0.5,
-              left: 40,
-              height: 20,
-              position: 'absolute',
-              borderBottomLeftRadius: 2,
-            }}
-          >
-            Free
-          </Label>
-        </Box>
-
         <Stack spacing={0.5} sx={{ mb: 2, mt: 1.5, width: 1 }}>
           <Typography
-            variant="subtitle2"
+            variant="subtitle1"
             noWrap
             sx={{ color: 'var(--layout-nav-text-primary-color)' }}
           >
-            {user?.displayName}
+            Uttam Kumar Panasala
           </Typography>
 
           <Typography
             variant="body2"
             noWrap
-            sx={{ color: 'var(--layout-nav-text-disabled-color)' }}
+            sx={{ color: 'var(--layout-nav-text-primary-color)' }}
           >
-            {user?.email}
+           <b> Product Manager Accelerator</b><br />
+            From entry-level to VP of Product, we<br /> support PM professionals through<br /> every stage of their careers.
           </Typography>
         </Stack>
 
-        <Button variant="contained" href={paths.weatherStore} target="_blank" rel="noopener">
-          Upgrade to Pro
-        </Button>
+
       </Stack>
     </Stack>
   );
