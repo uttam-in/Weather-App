@@ -1,8 +1,8 @@
 {
-  "name": "@minimal-kit/starter-next-ts",
-  "author": "Minimals",
+  "name": "@weather-app/starter-next-ts",
+  "author": "weather-app",
   "version": "6.1.0",
-  "description": "Next Starter & TypeScript",
+  "description": "Weather App Next.js with TypeScript",
   "private": true,
   "scripts": {
     "dev": "next dev -p 8083",
