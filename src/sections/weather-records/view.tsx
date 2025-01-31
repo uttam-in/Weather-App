@@ -54,7 +54,7 @@ export function WeatherAppRecords() {
     }
   };
 
-  const convertToCSV = (records: WeatherRecord[]): string => {
+  const convertToCSV = (recordsW: WeatherRecord[]): string => {
     const headers = [
       'Location',
       'Start Date',
@@ -66,7 +66,7 @@ export function WeatherAppRecords() {
       'Updated At'
     ].join(',');
 
-    const rows = records.map(record => {
+    const rows = recordsW.map(record => {
       const temperatureData = record.temperature_data
         ? record.temperature_data
             .map(data => `${format(new Date(data.dt * 1000), 'yyyy-MM-dd HH:mm')}:${data.main.temp}°C`)
@@ -94,8 +94,8 @@ export function WeatherAppRecords() {
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
       const fileName = `weather_records_${format(new Date(), 'yyyy-MM-dd_HHmmss')}.csv`;
       saveAs(blob, fileName);
-    } catch (error) {
-      setError('Failed to export records to CSV');
+    } catch (errorMsg) {
+      setError(`Failed to export records to CSV: ${errorMsg.message}`);
     }
   };
 
