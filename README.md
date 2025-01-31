@@ -16,8 +16,7 @@ yarn dev
 NEXT_PUBLIC_OPENWEATHER_API_KEY=************
 
 # DB setup
-Copy sample.env.local to .env.sample
-Update the db credentials
+Copy sample.env.local to .env.sample and update the db credentials
 ```
 DB_HOST=
 DB_USER=
