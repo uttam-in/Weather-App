@@ -18,6 +18,8 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { saveAs } from 'file-saver';
 import { WeatherRecord } from 'src/components/weather/types';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -49,6 +51,51 @@ export function WeatherAppRecords() {
       setError(`Failed to fetch records: ${errorMsg.message}`);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const convertToCSV = (records: WeatherRecord[]): string => {
+    const headers = [
+      'Location',
+      'Start Date',
+      'End Date',
+      'Latitude',
+      'Longitude',
+      'Temperature Data',
+      'Created At',
+      'Updated At'
+    ].join(',');
+
+    const rows = records.map(record => {
+      const temperatureData = record.temperature_data
+        ? record.temperature_data
+            .map(data => `${format(new Date(data.dt * 1000), 'yyyy-MM-dd HH:mm')}:${data.main.temp}°C`)
+            .join('; ')
+        : '';
+
+      return [
+        record.location,
+        record.start_date,
+        record.end_date,
+        record.latitude,
+        record.longitude,
+        `"${temperatureData}"`,
+        format(new Date(record.created_at), 'yyyy-MM-dd HH:mm:ss'),
+        format(new Date(record.updated_at), 'yyyy-MM-dd HH:mm:ss')
+      ].join(',');
+    });
+
+    return [headers, ...rows].join('\n');
+  };
+
+  const handleExportCSV = (): void => {
+    try {
+      const csv = convertToCSV(records);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      const fileName = `weather_records_${format(new Date(), 'yyyy-MM-dd_HHmmss')}.csv`;
+      saveAs(blob, fileName);
+    } catch (error) {
+      setError('Failed to export records to CSV');
     }
   };
 
@@ -129,9 +176,27 @@ export function WeatherAppRecords() {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Weather Records
-      </Typography>
+   <Box sx={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        mb: 4 
+      }}>
+        <Typography variant="h4" component="h1">
+          Weather Records
+        </Typography>
+        
+        <Stack direction="row" spacing={2}>
+          <Button
+            variant="outlined"
+            startIcon={<FileDownloadIcon />}
+            onClick={handleExportCSV}
+            disabled={loading || records.length === 0}
+          >
+            Export CSV
+          </Button>
+        </Stack>
+      </Box>
 
       {error && (
         <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError('')}>
