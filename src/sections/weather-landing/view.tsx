@@ -247,7 +247,7 @@ export function WeatherApp() {
       {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4">
-          Weather Forecast
+          Weather App
         </Typography>
         <Box sx={{ textAlign: 'right' }}>
           <Typography variant="body2" color="text.secondary">
